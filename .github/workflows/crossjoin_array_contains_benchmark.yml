@@ -24,9 +24,11 @@ on:
   push:
     branches:
       - 'benchmark/**'
+      - 'feature/crossjoin-array-contains-benchmark'
     paths:
       - 'sql/catalyst/src/main/scala/**/CrossJoinArrayContainsToInnerJoin.scala'
       - 'sql/core/src/test/scala/**/CrossJoinArrayContainsToInnerJoinBenchmark.scala'
+      - '.github/workflows/crossjoin_array_contains_benchmark.yml'
 
 jobs:
   benchmark:
