@@ -41,12 +41,10 @@ import org.apache.spark.sql.types._
  * }}}
  *
  * This avoids the O(N*M) cross join by using unnesting and equi-join.
- *
- * Ported from Presto's CrossJoinWithArrayContainsToInnerJoin optimizer rule.
  */
 object CrossJoinArrayContainsToInnerJoin extends Rule[LogicalPlan] with PredicateHelper {
 
-  // Supported element types for the optimization (matching Presto's supported types)
+  // Supported element types for the optimization
   private val supportedTypes: Set[DataType] = Set(
     IntegerType, LongType, StringType, DateType
   )

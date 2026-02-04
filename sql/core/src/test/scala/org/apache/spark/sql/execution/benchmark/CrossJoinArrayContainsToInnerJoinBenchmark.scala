@@ -73,8 +73,11 @@ object CrossJoinArrayContainsToInnerJoinBenchmark extends SqlBasedBenchmark {
     items.createOrReplaceTempView("items")
 
     benchmark.addCase("Cross join + array_contains filter (unoptimized)", numIters = 3) { _ =>
-      // Disable the optimization to simulate unoptimized behavior
-      withSQLConf(SQLConf.CROSS_JOINS_ENABLED.key -> "true") {
+      // Disable the optimization to measure the true cross-join+filter baseline
+      withSQLConf(
+        SQLConf.CROSS_JOINS_ENABLED.key -> "true",
+        SQLConf.OPTIMIZER_EXCLUDED_RULES.key ->
+          "org.apache.spark.sql.catalyst.optimizer.CrossJoinArrayContainsToInnerJoin") {
         // This query would be a cross join with filter without optimization
         val df = spark.sql(
           """
