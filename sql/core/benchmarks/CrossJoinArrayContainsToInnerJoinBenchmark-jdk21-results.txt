@@ -1,0 +1,38 @@
+================================================================================================
+CrossJoinArrayContainsToInnerJoin Benchmark
+================================================================================================
+
+OpenJDK 64-Bit Server VM 21.0.10+7-LTS on Linux 6.11.0-1018-azure
+AMD EPYC 7763 64-Core Processor
+Cross join with array_contains (1000 orders, 100 items, array size 5):  Best Time(ms)   Avg Time(ms)   Stdev(ms)    Rate(M/s)   Per Row(ns)   Relative
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+Cross join + array_contains filter (unoptimized)                                  52             69          15          1.9         520.8       1.0X
+Inner join with explode (optimized equivalent)                                    56             74          19          1.8         564.9       0.9X
+Inner join with explode (DataFrame API)                                           39             41           2          2.5         393.2       1.3X
+
+OpenJDK 64-Bit Server VM 21.0.10+7-LTS on Linux 6.11.0-1018-azure
+AMD EPYC 7763 64-Core Processor
+Cross join with array_contains (10000 orders, 1000 items, array size 10):  Best Time(ms)   Avg Time(ms)   Stdev(ms)    Rate(M/s)   Per Row(ns)   Relative
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+Cross join + array_contains filter (unoptimized)                                    582            596          19         17.2          58.2       1.0X
+Inner join with explode (optimized equivalent)                                       36             39           3        276.2           3.6      16.1X
+Inner join with explode (DataFrame API)                                              34             39           5        297.8           3.4      17.3X
+
+OpenJDK 64-Bit Server VM 21.0.10+7-LTS on Linux 6.11.0-1018-azure
+AMD EPYC 7763 64-Core Processor
+Scalability: varying array sizes:         Best Time(ms)   Avg Time(ms)   Stdev(ms)    Rate(M/s)   Per Row(ns)   Relative
+------------------------------------------------------------------------------------------------------------------------
+array_size=1 with explode optimization              143            151           7          7.0         143.5       1.0X
+array_size=5 with explode optimization              145            146           1          6.9         145.4       1.0X
+array_size=10 with explode optimization             144            150          10          6.9         144.3       1.0X
+array_size=50 with explode optimization             142            152          15          7.0         142.1       1.0X
+
+OpenJDK 64-Bit Server VM 21.0.10+7-LTS on Linux 6.11.0-1018-azure
+AMD EPYC 7763 64-Core Processor
+Different data types in array:            Best Time(ms)   Avg Time(ms)   Stdev(ms)    Rate(M/s)   Per Row(ns)   Relative
+------------------------------------------------------------------------------------------------------------------------
+Integer array                                        31             39           7         32.4          30.9       1.0X
+Long array                                           29             31           3         34.2          29.2       1.1X
+String array                                         37             37           1         27.2          36.8       0.8X
+
+
